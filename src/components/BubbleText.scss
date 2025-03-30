@@ -1,0 +1,9 @@
+// BubbleText.scss
+.bubble-text {
+    font-size: 12vw;
+    font-weight: bold;
+    background: linear-gradient(to right, #FF8199, #7FC9F8, #8089E0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
