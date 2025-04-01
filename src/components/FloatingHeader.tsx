@@ -36,7 +36,7 @@ export default function FloatingHeader() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -80, opacity: 0 }}
           transition={{ duration: 0.4, ease: "easeOut" }}
-          className="fixed top-0 left-0 w-full bg-white bg-opacity-80 shadow-md backdrop-blur-md z-50 px-6 py-4 flex justify-between items-center"
+          className="fixed top-0 left-0 w-full bg-white bg-opacity-80  backdrop-blur-md z-50 px-6 py-4 flex justify-between items-center"
         >
           <h1 className="text-xl font-bold">My Company</h1>
           <nav className="space-x-6 text-sm">
