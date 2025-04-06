@@ -1,0 +1,72 @@
+.impact-section {
+    height: 100vh;
+    position: relative;
+    background-color: #1e1e1e;
+    color: white;
+    overflow: hidden;
+  
+    // 3STEP 배경 텍스트
+    &::before {
+      content: "3STEP";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 30vw;
+      font-weight: bold;
+      color: #ffffff;
+      opacity: 0.1;
+      z-index: 0;
+      pointer-events: none;
+    }
+  
+    // 중앙 문구
+    .impact-title {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+  
+      h2 {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 500;
+  
+        .gradient-text {
+          display: inline-block;
+          background: linear-gradient(90deg, #ff8199, #bf85bd, #8089e0);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+    }
+  
+    // 숫자 카운터 하단 고정
+    .impact-stats {
+      position: absolute;
+      bottom: 5vh;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      gap: 10vw;
+      z-index: 1;
+  
+      .impact-item {
+        text-align: center;
+  
+        .impact-label {
+          font-size: 2vw;
+          font-weight: 100;
+          margin-bottom: 0.3rem;
+        }
+  
+        .impact-number {
+          font-size: 6vw;
+          font-weight: 800;
+        }
+      }
+    }
+  }
+  

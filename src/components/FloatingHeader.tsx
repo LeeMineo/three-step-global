@@ -38,13 +38,16 @@ export default function FloatingHeader() {
           transition={{ duration: 0.4, ease: "easeOut" }}
           className="fixed top-0 left-0 w-full bg-white bg-opacity-80  backdrop-blur-md z-50 px-6 py-4 flex justify-between items-center"
         >
-          <h1 className="text-xl font-bold">My Company</h1>
+          <h1 className="text-xl font-bold">3STEP GLOBAL</h1>
           <nav className="space-x-6 text-sm">
-            <a href="#company" className="hover:underline">회사소개</a>
-            <a href="#creators" className="hover:underline">크리에이터</a>
-            <a href="#business" className="hover:underline">비즈니스</a>
-            <a href="#contact" className="hover:underline">연락처</a>
+            <a href="#company" className="hover:underline">Overview</a>
+            <a href="#creators" className="hover:underline">Service</a>
+            <a href="#business" className="hover:underline">Reference</a>
+            <a href="#contact" className="hover:underline">Contact</a>
           </nav>
+          {/* <nav className="space-x-6 text-sm">
+            <a href="#company" className="hover:underline">EN</a>
+          </nav> */}
         </motion.header>
       )}
     </AnimatePresence>
