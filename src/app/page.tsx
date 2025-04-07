@@ -1,6 +1,7 @@
 import FloatingHeader from "@/components/FloatingHeader";
 import Bubble from "@/components/Bubble";
 import ImpactSection from "@/components/ImpactSection";
+import NextSection from "@/components/NextSection";
 
 
 export default function HomePage() {
@@ -9,6 +10,7 @@ export default function HomePage() {
       <FloatingHeader />
       <Bubble />
       <ImpactSection />
+      <NextSection />
     </main>
   );
 }

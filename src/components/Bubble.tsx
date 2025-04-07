@@ -8,12 +8,15 @@ import "./BubbleText.scss";
 
 const Bubble = ({ scrollY }: { scrollY: number }) => {
   const mesh = useRef<THREE.Mesh>(null);
+  
 
   useFrame(() => {
     if (mesh.current) {
       mesh.current.rotation.y += 0.002;
       mesh.current.rotation.x += 0.001;
-      const scale = 1 + scrollY * 2;
+      const eased = Math.pow(scrollY, 1.2); // 약간 가속 효과
+      const scale = 1 + eased * 4;
+
       mesh.current.scale.set(scale, scale, scale);
     }
   });
@@ -49,17 +52,18 @@ export default function BubbleScene() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const maxScroll = window.innerHeight * 2;
+      //const maxScroll = window.innerHeight * 2;
+      const maxScroll = window.innerHeight;
       const currentScroll = window.scrollY;
       const scrollRatio = Math.min(currentScroll / maxScroll, 1);
       setScrollY(scrollRatio);
 
       // 텍스트 서서히 사라짐
-      const fadeStart = 1.5;
+      const fadeStart = 0.1;
       let fadeRatio = 0;
 
       if (scrollRatio > fadeStart) {
-        fadeRatio = (scrollRatio - fadeStart) / (1 - fadeStart);
+        fadeRatio = Math.min((scrollRatio - fadeStart) / (1 - fadeStart), 1);
       }
 
       if (textRef.current) {
@@ -74,28 +78,48 @@ export default function BubbleScene() {
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       if (isAnimating) {
-        e.preventDefault(); // 애니메이션 중이면 스크롤 막기
+        e.preventDefault();
         return;
       }
-
-      // 아래로 스크롤 할 때만 트리거
-      if (e.deltaY > 0 && window.scrollY < window.innerHeight * 0.5) {
+  
+      const currentY = window.scrollY;
+      const screenH = window.innerHeight;
+  
+      // 아래로 스크롤 - Bubble → ImpactSection
+      if (e.deltaY > 0 && currentY < screenH - 10) {
+        // Step 1: 처음 → 소개 텍스트
         setIsAnimating(true);
-
-        window.scrollTo({
-          top: window.innerHeight * 2,
-          behavior: "smooth",
-        });
-
-        setTimeout(() => {
-          setIsAnimating(false);
-        }, 1500); // 애니메이션 길이만큼 설정
+        window.scrollTo({ top: screenH, behavior: "smooth" });
+        setTimeout(() => setIsAnimating(false), 1200);
+      } else if (e.deltaY > 0 && currentY >= screenH && currentY < screenH * 2 - 10) {
+        // Step 2: 소개 텍스트 → ImpactSection
+        setIsAnimating(true);
+        window.scrollTo({ top: screenH * 2, behavior: "smooth" });
+        setTimeout(() => setIsAnimating(false), 1200);
       }
+      
+      
+  
+      // 위로 스크롤 - ImpactSection → Bubble
+      if (e.deltaY < 0 && currentY >= screenH * 2 - 10) {
+        // Step 3: ImpactSection → 소개 텍스트
+        setIsAnimating(true);
+        window.scrollTo({ top: screenH, behavior: "smooth" });
+        setTimeout(() => setIsAnimating(false), 1200);
+      } else if (e.deltaY < 0 && currentY >= screenH - 10 && currentY < screenH + 10) {
+        // Step 4: 소개 텍스트 → 메인 텍스트
+        setIsAnimating(true);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        setTimeout(() => setIsAnimating(false), 1200);
+      }
+      
+      
     };
-
+  
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => window.removeEventListener("wheel", handleWheel);
   }, [isAnimating]);
+  
 
   return (
     <>
@@ -150,7 +174,7 @@ export default function BubbleScene() {
       </div>
 
       {/* 아래 공간 확보 - 스크롤을 위한 */}
-      <div style={{ height: "300vh" }} />
+      <div style={{ height: "200vh" }} />
     </>
   );
 }
