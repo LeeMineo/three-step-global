@@ -1,11 +1,11 @@
 .impact-section {
-  height: 100vh;
   position: relative;
+  overflow: hidden;
+  height: 100vh;
   background-color: #1e1e1e;
   color: white;
-  overflow: hidden;
+  z-index: 10;
 
-  // 배경 텍스트
   &::before {
     content: "3STEP";
     position: absolute;
@@ -20,7 +20,6 @@
     pointer-events: none;
   }
 
-  // 중앙 타이틀
   .impact-title {
     position: absolute;
     top: 50%;
@@ -42,7 +41,6 @@
     }
   }
 
-  // 카운터
   .impact-stats {
     position: absolute;
     bottom: 5vh;
@@ -68,23 +66,17 @@
       }
     }
   }
-}
 
-// 동그라미 애니메이션
-.circle-transition {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, 100%) scale(0); // 시작 위치 아래
-  width: 300vmax;
-  height: 300vmax;
-  background-color: #fff;
-  border-radius: 50%;
-  z-index: 999;
-  transition: transform 1.2s ease-in-out;
-  pointer-events: none;
-}
-
-.circle-transition.show {
-  transform: translate(-50%, -50%) scale(1); // 퍼지며 화면 덮음
+  .circle-transition {
+    position: absolute;
+    left: 50%;
+    width: 300vmax;
+    height: 300vmax;
+    background-color: #fff;
+    border-radius: 50%;
+    z-index: 5;
+    pointer-events: none;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.2s ease-out, top 0.2s ease-out;
+  }
 }

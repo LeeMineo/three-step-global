@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./ImpactSection.scss";
 
 const counters = [
@@ -14,7 +14,7 @@ const Counter = ({ target, onComplete }: { target: number; onComplete?: () => vo
 
   useEffect(() => {
     let start = 0;
-    const duration = 5000;
+    const duration = 3000;
     const frameRate = 30;
     const totalFrames = Math.round((duration / 1000) * frameRate);
     const increment = target / totalFrames;
@@ -37,30 +37,10 @@ const Counter = ({ target, onComplete }: { target: number; onComplete?: () => vo
 };
 
 export default function ImpactSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [countingDone, setCountingDone] = useState(false);
-  const [showCircle, setShowCircle] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const triggerPoint = (sectionRef.current?.offsetTop || 0) + 200;
-      const scrollY = window.scrollY;
-
-      if (countingDone) {
-        if (scrollY > triggerPoint) {
-          setShowCircle(true);
-        } else {
-          setShowCircle(false);
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [countingDone]);
+  const [, setCountingDone] = useState(false);
 
   return (
-    <section ref={sectionRef} className="impact-section">
+    <section className="impact-section">
       <div className="impact-title">
         <h2>
           <span className="gradient-text">Driven by Excellence</span>
@@ -82,9 +62,6 @@ export default function ImpactSection() {
           </div>
         ))}
       </div>
-
-      {/* 동그라미 애니메이션 */}
-      <div className={`circle-transition ${showCircle ? "show" : ""}`} />
     </section>
   );
 }

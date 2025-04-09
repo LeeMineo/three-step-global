@@ -52,20 +52,81 @@
   }
   
   .fadeout-text {
-    transform: translateY(0px);
     opacity: 1;
-    transition: transform 0.8s ease, opacity 0.8s ease;
+    transform: translateY(0);
+    transition: opacity 0.3s ease-in, transform 0.3s ease-in;
   }
   
-  // JavaScript에서 scrollY 값에 따라 클래스 추가 시
+  // ✨ 사라질 때만 transition 느리게!
   .fadeout-box.hidden .fadeout-text {
-    transform: translateY(-50px); // 위로 밀림
     opacity: 0;
+    transform: translateY(-30px);
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
   }
+  
   
   // 지연 애니메이션 (선택)
   .delay-1 { transition-delay: 0.1s; }
   .delay-2 { transition-delay: 0.2s; }
   .delay-3 { transition-delay: 0.3s; }
   .delay-4 { transition-delay: 0.4s; }
+  
+
+
+
+  //오로라 배경
+  .aurora-section {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #7FC9F8, #8089E0, #FFB6D9);
+    background-size: 400% 400%;
+    animation: gradientShift 7s ease infinite;
+    overflow: hidden;
+  }
+  
+  @keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  .aurora-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+  
+  .aurora-line {
+    fill: none;
+    stroke: url(#aurora-gradient);
+    stroke-width: 140;
+    stroke-linecap: round;
+    opacity: 0.4;
+    filter: blur(50px);
+    stroke-dasharray: 3000;
+    stroke-dashoffset: 3000;
+    animation: auroraFlow 4s ease-in-out infinite alternate;
+  }
+  
+  @keyframes auroraFlow {
+    0% {
+      stroke-dashoffset: 3000;
+      transform: scale(1) skewY(0deg);
+    }
+    50% {
+      stroke-dashoffset: 1500;
+      transform: scale(1.03) skewY(3deg);
+    }
+    100% {
+      stroke-dashoffset: 0;
+      transform: scale(1) skewY(0deg);
+    }
+  }
   

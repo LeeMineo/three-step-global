@@ -1,0 +1,26 @@
+.features-wrapper {
+    display: flex;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 100vh;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+  
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  
+  .feature-card {
+    flex: 0 0 100vw;
+    height: 100vh;
+    scroll-snap-align: start;
+    padding: 5rem;
+    background: rgba(255, 255, 255, 0.1); // 반투명 카드
+    backdrop-filter: blur(10px);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
