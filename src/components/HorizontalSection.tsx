@@ -5,24 +5,20 @@ import "./HorizontalSection.scss";
 
 const data = [
   {
-    title: "Content Planning ",
-    description:
-      "광고·콘텐츠 기획팀은 광고 기획부터 외부 업체와의 협업을 통해 큰 규모의 광고를 진행합니다.",
+    title: "Content Planning",
+    description: "광고·콘텐츠 기획팀은 광고 기획부터 외부 업체와의 협업을 통해 큰 규모의 광고를 진행합니다.",
   },
   {
-    title: "Live Agency ",
-    description:
-      "단순 라이브뿐만 아니라 광고, 마케팅 & 커머스 비즈니스까지 연계 가능한 콘텐츠 IP 사업도 함께 진행하고 있습니다.",
+    title: "Live Agency",
+    description: "단순 라이브뿐만 아니라 광고, 마케팅 & 커머스 비즈니스까지 연계 가능한 콘텐츠 IP 사업도 함께 진행하고 있습니다.",
   },
   {
     title: "Live Commerce",
-    description:
-      "숏폼 콘텐츠와 커머스를 함께 기획하여 높은 전환을 이끌어내며, 다양한 카테고리로 영역을 확장하고 있습니다.",
+    description: "숏폼 콘텐츠와 커머스를 함께 기획하여 높은 전환을 이끌어내며, 다양한 카테고리로 영역을 확장하고 있습니다.",
   },
   {
     title: "Viral Marketing",
-    description:
-      "SNS를 통해 자연스러운 소문을 조성하여 진짜처럼 느껴지는 콘텐츠를 기획하고, 지속적 효과를 유도합니다.",
+    description: "SNS를 통해 자연스러운 소문을 조성하여 진짜처럼 느껴지는 콘텐츠를 기획하고, 지속적 효과를 유도합니다.",
   },
 ];
 
@@ -31,6 +27,7 @@ export default function HorizontalSection() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [scrollX, setScrollX] = useState(0);
   const [isSticky, setIsSticky] = useState(false);
+  const [isFinalFixed, setIsFinalFixed] = useState(false);
   const [wrapperTop, setWrapperTop] = useState(0);
 
   useEffect(() => {
@@ -42,32 +39,39 @@ export default function HorizontalSection() {
       const containerTop = container.offsetTop;
       const containerHeight = container.offsetHeight;
       const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
 
       const scrollStart = containerTop;
-      const scrollEnd = containerTop + containerHeight - window.innerHeight;
+      const scrollEnd = containerTop + containerHeight - windowHeight;
 
       if (scrollY >= scrollStart && scrollY <= scrollEnd) {
         setIsSticky(true);
+        setIsFinalFixed(false);
         const progress = (scrollY - scrollStart) / (scrollEnd - scrollStart);
         const maxScrollX = wrapper.scrollWidth - window.innerWidth;
         setScrollX(progress * maxScrollX);
         setWrapperTop(0);
-      } else {
+      } else if (scrollY > scrollEnd) {
+        // 마지막 고정 위치
         setIsSticky(false);
+        setIsFinalFixed(true);
         const maxScrollX = wrapper.scrollWidth - window.innerWidth;
-        if (scrollY < scrollStart) {
-          setScrollX(0);
-          setWrapperTop(0);
-        } else {
-          setScrollX(maxScrollX);
-          setWrapperTop(containerHeight - window.innerHeight);
-        }
+        setScrollX(maxScrollX);
+        setWrapperTop(containerHeight - windowHeight);
+      } else {
+        // 시작 전
+        setIsSticky(false);
+        setIsFinalFixed(false);
+        setScrollX(0);
+        setWrapperTop(0);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  
 
   return (
     <div
@@ -76,11 +80,13 @@ export default function HorizontalSection() {
       style={{ height: `${(data.length + 1) * 100}vh` }}
     >
       <div
-        className={`horizontal-wrapper ${isSticky ? "fixed" : "after-fixed"}`}
         ref={wrapperRef}
+        className={`horizontal-wrapper ${
+          isFinalFixed ? "final-fixed" : isSticky ? "fixed" : "after-fixed"
+        }`}
         style={{
           transform: `translateX(-${scrollX}px)`,
-          top: wrapperTop,
+          top: isSticky || isFinalFixed ? 0 : wrapperTop,
         }}
       >
         {data.map((item, index) => (
@@ -92,22 +98,20 @@ export default function HorizontalSection() {
           </div>
         ))}
 
-        {/* ✨ 안내 섹션 */}
-<div className="horizontal-end-section">
-  <div className="end-inner">
-    <h2>
-      쓰리스텝 글로벌은 <br />
-      국내 최초 MCN&라이브 사업을 <br />
-      병행하는 기업입니다.
-    </h2>
-    <div className="scroll-indicator">
-      The influence of our company
-      <span className="arrow">↓</span>
-    </div>
-  </div>
-</div>
-
-
+        {/* 끝 섹션 */}
+        <div className="horizontal-end-section">
+          <div className="end-main-title">
+            <h2>
+              쓰리스텝 글로벌은 <br />
+              국내 최초 MCN&라이브 사업을 <br />
+              병행하는 기업입니다.
+            </h2>
+            <div className="scroll-indicator">
+              The influence of our company
+              <span className="arrow">↓</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

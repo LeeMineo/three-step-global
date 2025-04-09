@@ -3,6 +3,7 @@ import Bubble from "@/components/Bubble";
 import ImpactSection from "@/components/ImpactSection";
 import Influencer from "@/components/Influencer";
 import HorizontalSection from "@/components/HorizontalSection";
+import Footer from "@/components/Footer";
 
 
 
@@ -14,6 +15,8 @@ export default function HomePage() {
       <HorizontalSection />
       <Influencer />
       <ImpactSection />
+
+      <Footer />
 
 
     </main>
