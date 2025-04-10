@@ -51,10 +51,12 @@ export default function HorizontalSection() {
         const maxScrollX = wrapper.scrollWidth - window.innerWidth;
         setScrollX(progress * maxScrollX);
         setWrapperTop(0);
+
+        
       } else if (scrollY > scrollEnd) {
         // 마지막 고정 위치
         setIsSticky(false);
-        setIsFinalFixed(true);
+        setIsFinalFixed(false);
         const maxScrollX = wrapper.scrollWidth - window.innerWidth;
         setScrollX(maxScrollX);
         setWrapperTop(containerHeight - windowHeight);
@@ -65,6 +67,9 @@ export default function HorizontalSection() {
         setScrollX(0);
         setWrapperTop(0);
       }
+      
+
+      
     };
 
     window.addEventListener("scroll", handleScroll);

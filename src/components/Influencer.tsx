@@ -9,21 +9,21 @@ const influencers = [
     hoverSrc: "/influencer1_hover.png",
     name: "selin.egmn",
     followers: "730K",
-    link: "https://www.instagram.com/selin.egmn",
+    link: "https://www.instagram.com/selin.egmn/",
   },
   {
     src: "/influencer2.png",
     hoverSrc: "/influencer2_hover.png",
-    name: "minseo.influencer",
-    followers: "117K",
-    link: "https://www.instagram.com/minseo.influencer",
+    name: "gyuree_k",
+    followers: "82K",
+    link: "https://www.instagram.com/gyuree_k/",
   },
   {
     src: "/influencer3.png",
     hoverSrc: "/influencer3_hover.png",
     name: "hyemi.live",
-    followers: "82K",
-    link: "https://www.instagram.com/hyemi.live",
+    followers: "117K",
+    link: "https://www.instagram.com/jaeinn/",
   },
 ];
 
@@ -109,31 +109,25 @@ export default function Influencer() {
   rel="noopener noreferrer"
   className={`influencer-card card-${i}`}
 >
-  <div
-    className="hover-wrapper"
-    onMouseEnter={() => {
-      console.log("✅ hover enter:", i);
-      setHoverIndex(i);
-    }}
-    onMouseLeave={() => {
-      console.log("❌ hover leave");
-      setHoverIndex(null);
-    }}
-  >
-    <img
-      key={hoverIndex === i ? `${item.name}-hover` : `${item.name}-normal`}
-      src={hoverIndex === i ? item.hoverSrc : item.src}
-      alt={item.name}
-    />
-    <div className="overlay">
-      <div className="info">
-        <p>@{item.name}</p>
-        <p>{item.followers}</p>
-      </div>
-      <div className="bar left-bar"></div>
-      <div className="bar right-bar"></div>
-    </div>
-  </div>
+<div className="hover-wrapper"
+  onMouseEnter={() => {
+    console.log("✅ hover enter:", i);
+    setHoverIndex(i);
+  }}
+  onMouseLeave={() => {
+    console.log("❌ hover leave");
+    setHoverIndex(null);
+  }}
+>
+  <img
+    key={hoverIndex === i ? `${item.name}-hover` : `${item.name}-normal`}
+    src={hoverIndex === i ? item.hoverSrc : item.src}
+    alt={item.name}
+  />
+  <div className="top-bar">{item.followers}</div>
+  <div className="bottom-bar">#{item.name}</div>
+</div>
+
 </a>
 
         ))}
